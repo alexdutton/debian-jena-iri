@@ -1,0 +1,14 @@
+Source: jena-iri
+Priority: extra
+Maintainer: Alexander Dutton <alexander.dutton@oucs.ox.ac.uk>
+Build-Depends: debhelper (>= 7.0.50~)
+Standards-Version: 3.8.4
+Section: libs
+Homepage: http://incubator.apache.org/jena/
+
+Package: libjena-iri-java
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Semantic web library
+

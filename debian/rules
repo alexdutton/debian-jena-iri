@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/ant.mk
+
+PACKAGE              := $(DEB_SOURCE_PACKAGE)
+VERSION              := $(shell echo $(DEB_UPSTREAM_VERSION) | sed -s "s/~alpha/-alpha-/")
+JAVA_HOME            := /usr/lib/jvm/default-java
+DEB_JARS             := ant-nodeps slf4j-api qdox jdom1 plexus-container-default plexus-utils
+DEB_ANT_BUILD_TARGET := package #javadoc
+DEB_ANT_BUILDFILE    := /usr/share/maven-ant-helper/maven-build.xml
+DEB_ANT_ARGS         := -Dbasedir=$(realpath .) -Dpackage=$(PACKAGE)
+API_DOCS             := target/api
+
+binary-post-install/lib$(PACKAGE)-java::
+	mh_installpoms -plib$(PACKAGE)-java
+	mh_installjar -plib$(PACKAGE)-java -l pom.xml target/$(PACKAGE)-$(VERSION).jar
+
+clean::
+	mh_clean
+
+get-orig-source:
+	sh -e debian/orig-tar.sh
+
